@@ -5,6 +5,7 @@
 #include <sstream>
 #include <map>
 #include <functional>
+#include <time.h>
 
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
@@ -36,6 +37,7 @@ class cli
 	struct options
 	{
 		output_e output = output_e::HTML;
+		int year = 0;
 		std::string datadir = "./data";
 	};
 
@@ -64,10 +66,12 @@ class cli
 	static int interpret(options& opt, int argc, char** argv)
 	{
 		std::string outputstr = "html";
+		int outputyear = 0;
 
 		boost::program_options::options_description o_general("General options");
 		o_general.add_options()
 		("help,h", "display this message")
+		("year,y", boost::program_options::value(&outputyear), "lecture year (defaults to last year in the fall, current year in spring)")
 		("outputtype,t", boost::program_options::value(&outputstr), "{html, csv} (defaults to html)")
 		("datadir,d", boost::program_options::value<decltype(opt.datadir)>(&opt.datadir), "specify in which directory to search for the data files (default ./data)");
 
@@ -106,6 +110,16 @@ class cli
 			return 1;
 		}
 
+		if(outputyear == 0) {
+			time_t rawtime;
+			time(&rawtime);
+			struct tm timeinfo = *localtime(&rawtime);
+			opt.year = timeinfo.tm_year+1900 -1;
+		}
+		else {
+			opt.year = outputyear;
+		}
+
 		if(outputstr == "html" || outputstr == "")
 			opt.output = output_e::HTML;
 		else if(outputstr == "csv")
@@ -134,7 +148,7 @@ class cli
 		);
 
 		if(opt.output == output_e::HTML)
-			printer::print(old_data, new_data);
+			printer::print(old_data, new_data, opt.year);
 		else if(opt.output == output_e::CSV)
 			printer::print_csv(old_data, new_data);
 		else

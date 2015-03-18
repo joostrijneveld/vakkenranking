@@ -69,7 +69,7 @@ namespace vakkenranking
 			}
 		}
 	
-		static void print(const std::vector<evaluation>& old_data, const std::vector<evaluation>& new_data)
+		static void print(const std::vector<evaluation>& old_data, const std::vector<evaluation>& new_data, const int year)
 		{
 			const static size_t slice_count = 3;
 	
@@ -85,7 +85,7 @@ namespace vakkenranking
 
 			std::cout << "<!DOCTYPE html><html>\n<head>\n"
 				<< "\t<meta charset=\"UTF-8\" />\n"
-				<< "\t<title>OLC III - Vakkenranking 2013-2014</title>\n"
+				<< "\t<title>OLC III - Vakkenranking " << year << "-" << year + 1 << "</title>\n"
 				<< "\t<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"http://olc.cs.ru.nl/assets/twentyeleven.css\">\n"
 				<< "\t<style>\n"
 				<< "\t\t.entry-content {\n"
@@ -122,8 +122,9 @@ namespace vakkenranking
 				<< "</head>\n"
 				<< "<body>\n"
 				<< "<header class=\"entry-header\">\n"
-				<< "\t<h1 class=\"entry-title\">Vakkenranking Informatica 2013-2014</h1>\n"
-				<< "\t<h2>door Wouter Geraedts &lt;radboud@woutergeraedts.nl&gt;</h2>\n"
+				<< "\t<h1 class=\"entry-title\">Vakkenranking Informatica " << year << "-" << year + 1 << "</h1>\n"
+				<< "\t<h2>Opleidingscommissie Informatica &amp; Informatiekunde " << year << "-" << year + 1 << "</h2>\n"
+				<< "\t<h2>Met dank aan <a href='https://github.com/Wassasin/vakkenranking' style='color:black;'>Wouter Geraedts</a></h2>\n"
 				<< "</header>\n"
 				<< "<br />\n"
 				<< "<div class=\"entry-content\" role=\"main\">\n";
@@ -248,8 +249,8 @@ namespace vakkenranking
 				<< "<tr><td class=\"legend-left\">▲▲</td><td>&rarr;</td><td>δ > 1.0</td></tr>\n"
 				<< "<tr><td class=\"legend-left\"><span style=\"color: #BBB\">▼ grijs</span></td><td>&rarr;</td><td>niet significant aantal deelnemers</td></tr>\n"
 				<< "<tr><td class=\"legend-left\"><span style=\"color: red\">▼ kleur</span></td><td>&rarr;</td><td>significant aantal deelnemers</td></tr>\n"
-				<< "<tr><td class=\"legend-left\">!</td><td>&rarr;</td><td>cursus nieuw in 2013-2014</td></tr>\n"
-				<< "<tr><td class=\"legend-left\">?</td><td>&rarr;</td><td>geen enquêteresultaten uit 2012-2013</td></tr>\n"
+				<< "<tr><td class=\"legend-left\">!</td><td>&rarr;</td><td>cursus nieuw in " << year << "-" << year + 1 << "</td></tr>\n"
+				<< "<tr><td class=\"legend-left\">?</td><td>&rarr;</td><td>geen enquêteresultaten uit " << year - 1 << "-" << year << "</td></tr>\n"
 				<< "</table></div>"
 				<< "</body></html>";
 		}
